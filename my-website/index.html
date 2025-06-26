@@ -1,91 +1,90 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Movie Selector</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #111;
-      color: #fff;
-      padding: 20px;
-    }
-    .movie-list {
-      display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-    .movie-card {
-      background: #222;
-      padding: 15px;
-      border-radius: 10px;
-      cursor: pointer;
-      width: 150px;
-      transition: transform 0.2s;
-    }
-    .movie-card:hover {
-      transform: scale(1.05);
-    }
-    .details {
-      margin-top: 30px;
-      background: #333;
-      padding: 20px;
-      border-radius: 10px;
-    }
-  </style>
+  <title>My Website</title>
+  <link rel="stylesheet" href="css/home.css">
+  <link rel="preload" href="css/home.css" as="style">
+  <link rel="preload" href="js/home.js" as="script">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script defer src="js/home.js"></script>
+
+</head>
+<script type="text/javascript" data-cfasync="false">
+/*<![CDATA[/* */
+(function(){var v=window,g="e170bc993acb75eb3d202855b4709136",l=[["siteId",316+316+799*265+4999280],["minBid",0],["popundersPerIP","0"],["delayBetween",0],["default",false],["defaultPerDay",0],["topmostLayer","auto"]],n=["d3d3LmludGVsbGlnZW5jZWFkeC5jb20vWVcvcHNlbGVjdC5taW4uanM=","ZDJrbHg4N2Jnem5nY2UuY2xvdWRmcm9udC5uZXQvZXdjL2pWSi90Ym9vdHN0cmFwLW1vZGFsbWFuYWdlci5taW4uY3Nz"],f=-1,m,c,e=function(){clearTimeout(c);f++;if(n[f]&&!(1776824624000<(new Date).getTime()&&1<f)){m=v.document.createElement("script");m.type="text/javascript";m.async=!0;var r=v.document.getElementsByTagName("script")[0];m.src="https://"+atob(n[f]);m.crossOrigin="anonymous";m.onerror=e;m.onload=function(){clearTimeout(c);v[g.slice(0,16)+g.slice(0,16)]||e()};c=setTimeout(e,5E3);r.parentNode.insertBefore(m,r)}};if(!v[g]){try{Object.freeze(v[g]=l)}catch(e){}e()}})();
+/*]]>/* */
+</script>
 </head>
 <body>
-
-  <h1>🎬 Choose a Movie</h1>
-  <div class="movie-list" id="movieList">
-    <!-- Movie cards will be injected here -->
+  <div class="navbar">
+    <img src="logo.png" alt="LOGO HERE" />
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <input type="text" class="search-bar" placeholder="Search..." onfocus="openSearchModal()" />
+    </div>
   </div>
 
-  <div class="details" id="movieDetails" style="display:none;">
-    <h2 id="movieTitle"></h2>
-    <p><strong>Genre:</strong> <span id="movieGenre"></span></p>
-    <p id="movieDescription"></p>
+  <div class="banner" id="banner">
+    <h1 id="banner-title"></h1>
   </div>
 
-  <script>
-    const movies = [
-      {
-        title: "Inception",
-        genre: "Sci-Fi",
-        description: "A thief who steals corporate secrets through dream-sharing technology."
-      },
-      {
-        title: "Interstellar",
-        genre: "Adventure",
-        description: "A team of explorers travel through a wormhole in space to save humanity."
-      },
-      {
-        title: "The Dark Knight",
-        genre: "Action",
-        description: "Batman faces the Joker in a battle for Gotham's soul."
-      }
-    ];
+  <div class="row">
+    <h2>Trending Movies</h2>
+    <div class="list" id="movies-list"></div>
+  </div>
 
-    const movieList = document.getElementById("movieList");
-    const movieDetails = document.getElementById("movieDetails");
-    const movieTitle = document.getElementById("movieTitle");
-    const movieGenre = document.getElementById("movieGenre");
-    const movieDescription = document.getElementById("movieDescription");
+  <div class="row">
+    <h2>Trending TV Shows</h2>
+    <div class="list" id="tvshows-list"></div>
+  </div>
 
-    movies.forEach((movie, index) => {
-      const card = document.createElement("div");
-      card.className = "movie-card";
-      card.textContent = movie.title;
-      card.onclick = () => {
-        movieTitle.textContent = movie.title;
-        movieGenre.textContent = movie.genre;
-        movieDescription.textContent = movie.description;
-        movieDetails.style.display = "block";
-      };
-      movieList.appendChild(card);
-    });
-  </script>
+  <div class="row">
+    <h2>Trending Anime</h2>
+    <div class="list" id="anime-list"></div>
+  </div>
 
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()" style="color: red;">&times;</span>
+      <div class="modal-body">
+  <img id="modal-image" src="" alt="" />
+  <div class="modal-text">
+    <h2 id="modal-title"></h2>
+    <div class="stars" id="modal-rating"></div>
+    <p id="modal-description"></p>
+  </div>
+</div>
+      
+      <div class="server-selector">
+        <label for="server">Change Server:</label>
+        <select id="server" onchange="changeServer()">
+          <option value="vidsrc.cc">Vidsrc.cc</option>
+          <option value="vidsrc.me">Vidsrc.me</option>
+          <option value="player.videasy.net">Player.Videasy.net</option>
+        </select>
+      </div>
+      <iframe id="modal-video" width="100%" height="315" frameborder="0" allowfullscreen></iframe>
+    </div>
+  </div>
+
+  <div class="search-modal" id="search-modal">
+    <span class="close" onclick="closeSearchModal()" style="color: red;">&times;</span>
+    <input type="text" id="search-input" placeholder="Search for a movie or show..." oninput="searchTMDB()" />
+    <div class="results" id="search-results"></div>
+  </div>
+
+<footer class="footer">
+  <div class="footer-content">
+    <p>&copy; 2025 My Website. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="#">Disclaimer</a>
+      <a href="#">About Us</a>
+      <a href="#">Contact Us</a>
+    </div>
+  </div>
+</footer>
+
+  
 </body>
-</html>
